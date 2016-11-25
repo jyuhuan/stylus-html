@@ -1,6 +1,6 @@
 ## Stylus<sup style="font-variant: small-caps">HTML</sup>
 
-Ever wanted to write academic notes using HTML? Stylus<sup style="font-variant: small-caps">HTML</sup> is here to help!
+Ever wanted to do academic writing using HTML? Stylus<sup style="font-variant: small-caps">HTML</sup> is here to help!
 
 Stylus<sup style="font-variant: small-caps">HTML</sup> provides simple HTML tags and attributes for fundamental elements in academic-style writing. 
 
