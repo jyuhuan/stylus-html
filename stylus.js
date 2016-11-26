@@ -143,7 +143,7 @@ sections.forEach(s => {
         <div class="section-heading-general section-heading-${sectionLevel}">
           <span class="section-heading-number">${sectionNumber}</span> ${s.getAttribute("heading")}
         </div> 
-        <div class="section-body-general section-body-${sectionLevel}">${s.innerHTML}</div>
+        <div class="section-body-general section-body-${sectionLevel}">${s.innerText}</div>
       </div>`
     );
 
