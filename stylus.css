@@ -1,0 +1,93 @@
+body {
+  text-align: justify;
+}
+
+/* Title */
+
+div.title {
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  margin: 20px 0px 20px 0px;
+}
+
+
+/* Author pane */
+
+.author-list-pane {
+  display: block;
+  text-align: center;
+}
+
+ul.author-list {
+  /* display:flex; */ /* enable this to force all authors on the same line.*/
+  list-style:none;
+  padding: 0;
+}
+
+li.author-list-item {
+  display: inline;
+}
+
+div.author-box {
+  padding: 10px;
+  text-align: center;
+  display: inline-block;
+}
+
+
+/* Abstract pane */
+
+div.abstract-heading {
+  display: block;
+  font-weight: 600;
+  text-align: center;
+  margin: 10px;
+}
+
+div.abstract-body {
+  display: block;
+  max-width: 80%;
+  margin: auto;
+}
+
+span.author-name {
+  font-weight: 800;
+}
+span.author-email {
+  font-family: monospace;
+}
+
+
+/* Section Pane */
+
+div.section-pane {
+  padding: 10px;
+}
+
+div.section-box-general {
+  padding: 10px 0px 10px 0px;
+}
+
+
+div.section-heading-general {
+  font-weight: 600;
+  padding: 10px 0px 10px 0px;
+}
+
+div.section-heading-1 {
+  font-size: 1.4em;
+}
+div.section-heading-2 {
+  font-size: 1.2em;
+}
+div.section-heading-3 {
+  font-size: 1.0em;
+}
+
+div.section-body-general {
+}
+
+span.section-heading-number {
+  margin-right:15px;
+}
