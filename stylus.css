@@ -9,12 +9,13 @@ div.title {
   text-align: center;
   font-weight: 600;
   margin: 20px 0px 20px 0px;
+  font-size: 1.4em;
 }
 
 
 /* Author pane */
 
-.author-list-pane {
+div.author-list-pane {
   display: block;
   text-align: center;
 }
@@ -30,13 +31,29 @@ li.author-list-item {
 }
 
 div.author-box {
+  vertical-align: top;
   padding: 10px;
   text-align: center;
   display: inline-block;
 }
 
 
+span.author-name {
+  font-weight: 800;
+}
+span.author-email {
+  font-family: monospace;
+}
+
+
+
 /* Abstract pane */
+
+div.abstract-pane {
+  display: block;
+  max-width: 80%;
+  margin: auto;
+}
 
 div.abstract-heading {
   display: block;
@@ -47,26 +64,18 @@ div.abstract-heading {
 
 div.abstract-body {
   display: block;
-  max-width: 80%;
   margin: auto;
-}
-
-span.author-name {
-  font-weight: 800;
-}
-span.author-email {
-  font-family: monospace;
+  hyphens: auto;
 }
 
 
 /* Section Pane */
 
 div.section-pane {
-  padding: 10px;
+  padding: 10px 0px 10px 0px;
 }
 
 div.section-box-general {
-  padding: 10px 0px 10px 0px;
 }
 
 
@@ -86,8 +95,52 @@ div.section-heading-3 {
 }
 
 div.section-body-general {
+  hyphens: auto;
 }
 
 span.section-heading-number {
   margin-right:15px;
 }
+
+/* Code box */
+div.code-box {
+  margin: 10px 20px 10px 20px;
+}
+
+/* Citations */
+span.bib-kind {
+  color: grey;
+}
+div.bib-name {
+  font-style: italic;
+  font-weight: 600;
+}
+a.bib-url-text {
+  font-family: monospace;
+}
+span.bib-author-text {
+  color: grey;
+}
+
+/* Custom tags */
+sc {
+  font-variant: small-caps;
+}
+it {
+  font-style: italic;
+}
+rm {
+  font-style: normal;
+}
+
+/* Fixing issues with built-in tags */
+sup { 
+  vertical-align: top; 
+  position: relative; 
+  top: -0.5em; 
+}
+
+code {
+  font-size: 0.9em;
+}
+
