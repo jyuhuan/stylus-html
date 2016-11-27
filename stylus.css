@@ -144,3 +144,8 @@ code {
   font-size: 0.9em;
 }
 
+
+/* Fixing issues with highlight.js */
+.hljs {
+  background: white;
+}
