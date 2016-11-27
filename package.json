@@ -1,0 +1,14 @@
+{
+	"name": "stylus",
+	"version": "0.0.0",
+	"description": "Easy academic writing in HTML.",
+	"contributors": [{
+		"name": "Yuhuan Jiang",
+		"email": "jyuhuan@gmail.com"
+	}],
+	"dependencies": {
+		"highlight.js": "9.8.0",
+		"jquery": "3.1.1",
+		"jquery-balloon-js": "1.0.0"
+	}
+}
