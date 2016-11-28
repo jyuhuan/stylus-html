@@ -1,0 +1,58 @@
+body {
+  font-family: "Times", "Times LT", "Times New Roman", serif;
+  font-size: 15px;
+  margin: 0;
+}
+
+div.paper {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  
+  padding: 70px 90px 70px 90px;
+
+  max-width: 600px;
+
+
+  display: block;
+  background-color: #FFF;
+
+}
+
+div.title {
+  font-size: 20px;
+}
+
+
+div.author-list-pane {
+  font-size: 16px;
+}
+
+
+div.abstract-heading {
+  font-size: 15px;
+}
+
+div.abstract-pane {
+  max-width: 90%;
+  padding: 10px 0px 0px 0px;
+}
+
+
+
+
+
+
+div.section-heading-1 {
+  font-size: 17px;
+}
+div.section-heading-2 {
+  font-size: 15px;
+}
+div.section-heading-3 {
+  font-size: 15px;
+}
+
+
+
