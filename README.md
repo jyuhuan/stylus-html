@@ -10,20 +10,15 @@ Powerful as Stylus<sup style="font-variant: small-caps">HTML</sup> is, no extern
 
 ### Getting Started
 
-First, clone this repo and cd into the downloaded directory
+Clone this repo to any directory. Let `stylus-dir` be that directory for demonstration purpose.
 
-```bash
-git clone https://github.com/jyuhuan/stylus-html.git
-cd stylus-html
+The following command will create a new document with a basic skeleton:
+
+```
+python stylus-dir/stylus-new.py "My Paper Title"
 ```
 
-Execute the following command
-
-```bash
-npm install
-```
-
-Then, open `demo.html` and play with it.
+The new file will be created under `pwd`, and has the name `My-Paper-Title.html`. You can also omit the name. In that case, the the file name will be `Untitled-Stylus-Paper.html`.
 
 
 ### Why Stylus<sup style="font-variant: small-caps">HTML</sup>?
