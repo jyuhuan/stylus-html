@@ -1,5 +1,9 @@
-const stylusRootDir = "/Users/yuhuan/work/proj/web/stylus-html"
+const stylusRootDir = ""
 const DEBUG_FLAG = 0
+
+if (stylusRootDir == "") {
+  alert("Please run update-installation.py! Otherwise the whole thing will be an epic failure! (as you will soon see after you click OK...)")
+}
 
 /** 
  * Utility functions
