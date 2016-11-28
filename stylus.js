@@ -1,4 +1,5 @@
-const DEBUG_FLAG = 0;
+const stylusRootDir = "/Users/yuhuan/work/proj/web/stylus-html"
+const DEBUG_FLAG = 0
 
 /** 
  * Utility functions
@@ -100,13 +101,13 @@ function println(str) {
 
 StyleSheetLoader.loadStyleSheets([
   "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/default.min.css",
-  "../stylus.css",
-  "../frosting/coling.css"
+  `${stylusRootDir}/stylus.css`,
+  `${stylusRootDir}/frosting/coling-borderless.css`
 ])
 
 const scripts = [
   "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js",
-  "../node_modules/jquery-balloon-js/jquery.balloon.js",
+  "https://urin.github.io/jquery.balloon.js/js/jquery.balloon.js",
   "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"
 ]
 ScriptLoader.loadScriptsSequentially(scripts, () => {$(() => {
@@ -350,5 +351,12 @@ ScriptLoader.loadScriptsSequentially(scripts, () => {$(() => {
     //println(c)
   })
 
+  // Maintain the last vertical scrolling position nicely.
+  const lastScrollPosition = localStorage.getItem("scrollPosition")
+  println(lastScrollPosition)
+  window.scrollTo(0, lastScrollPosition)
+  window.onbeforeunload = (e) => {
+    localStorage.setItem("scrollPosition", document.body.scrollTop);
+  }
     
 })})
