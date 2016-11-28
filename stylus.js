@@ -1,74 +1,125 @@
 const DEBUG_FLAG = 0;
 
-// From http://stackoverflow.com/a/2007473
-function NodeFromString(str) {
-  const node = document.createElement("template");
-  node.innerHTML = str;
-  return node.content.firstChild;
+/** 
+ * Utility functions
+ */
+
+class ScriptLoader {
+  // From http://stackoverflow.com/a/950146
+  static loadScript(url, callback) {
+    // Adding the script tag to the head as suggested before
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+
+    // Then bind the event to the callback function.
+    // There are several events for cross browser compatibility.
+    script.onreadystatechange = callback;
+    script.onload = callback;
+
+    // Fire the loading
+    head.appendChild(script);
+  }
+
+  static loadScriptsSequentially(urls, callback) {
+    function go(urls, curUrlIdx, callback) {
+      if (curUrlIdx == urls.length) callback()
+      else ScriptLoader.loadScript(urls[curUrlIdx], () => go(urls, curUrlIdx + 1, callback))
+    }
+    go(urls, 0, callback)
+  }
+
+  static loadMathJax() {
+    var head = document.getElementsByTagName("head")[0], script;
+    script = document.createElement("script");
+    script.type = "text/x-mathjax-config";
+    script[(window.opera ? "innerHTML" : "text")] =
+      "MathJax.Hub.Config({\n" +
+      "  tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }, \n" +
+      "  TeX: { equationNumbers: { autoNumber: \"AMS\" } }\n" +
+      "});"
+    head.appendChild(script);
+    script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    head.appendChild(script);
+  }
 }
 
-function StandardNodeWithId(name, id) {
-  const n = document.createElement(name);
-  n.setAttribute("id", id);
-  return n;
+class StyleSheetLoader {
+  // Adapted from http://www.javascriptkit.com/javatutors/loadjavascriptcss.shtml
+  static loadStyleSheet(filename) {
+    var fileref=document.createElement("link")
+    fileref.setAttribute("rel", "stylesheet")
+    fileref.setAttribute("type", "text/css")
+    fileref.setAttribute("href", filename)
+    if (typeof fileref!="undefined")
+      document.getElementsByTagName("head")[0].appendChild(fileref)
+  }
+  static loadStyleSheets(urls) {
+    urls.forEach(url => StyleSheetLoader.loadStyleSheet(url))
+  }
 }
 
-function StandardNodeWithClass(name, className) {
-  const n = document.createElement(name);
-  n.className = className;
-  return n;
-}
+class DomElement {
+  // From http://stackoverflow.com/a/2007473
+  static fromString(str) {
+    const node = document.createElement("template");
+    node.innerHTML = str;
+    return node.content.firstChild;
+  }
 
-function StandardNodeWithIdAndClass(name, id, className) {
-  const n = document.createElement(name);
-  n.setAttribute("id", id);
-  n.className = className;
-  return n;
+  static standardElementWithId(name, id) {
+    const n = document.createElement(name);
+    n.setAttribute("id", id);
+    return n;
+  }
+
+  static standardElementWithClass(name, className) {
+    const n = document.createElement(name);
+    n.className = className;
+    return n;
+  }
+
+  static standardElementWithIdAndClass(name, id, className) {
+    const n = document.createElement(name);
+    n.setAttribute("id", id);
+    n.className = className;
+    return n;
+  }
 }
 
 function println(str) {
   console.log(str);
 }
 
-// From http://stackoverflow.com/a/4793630
-function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
+/** 
+ * Core code
+ */
 
-// Adapted from http://www.javascriptkit.com/javatutors/loadjavascriptcss.shtml
-function loadJavasSript(filename){
-  var fileref=document.createElement('script')
-  fileref.setAttribute("type","text/javascript")
-  fileref.setAttribute("src", filename)
-  fileref.setAttribute("charset", "UTF-8")
-  
-    var script = document.createElement("script")
-    script.type = "text/javascript";
-  if (typeof fileref!="undefined")
-    document.getElementsByTagName("head")[0].appendChild(fileref)
-}
-function loadStyleSheet(filename){
-  var fileref=document.createElement("link")
-  fileref.setAttribute("rel", "stylesheet")
-  fileref.setAttribute("type", "text/css")
-  fileref.setAttribute("href", filename)
-  if (typeof fileref!="undefined")
-    document.getElementsByTagName("head")[0].appendChild(fileref)
-}
+StyleSheetLoader.loadStyleSheets([
+  "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/default.min.css",
+  "../stylus.css",
+  "../frosting/coling.css"
+])
 
-
-
-$(() => {
-
-  const bodyNode = document.body;
+const scripts = [
+  "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js",
+  "../node_modules/jquery-balloon-js/jquery.balloon.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"
+]
+ScriptLoader.loadScriptsSequentially(scripts, () => {$(() => {
+  ScriptLoader.loadMathJax()
 
   // Naming convention:
-  //  - userAbcNode: the node user wrote in the html
-  //  - stylusAbcNode: the node that stylus generates
-  // In other words, userAbcNode is the input, stylusAbcNode is the output.
+  //  - userAbcNode(s): the node(s) user wrote in the html
+  //  - stylusAbcNode(s): the node(s) that stylus generates
+  // In other words, userAbcNode(s) is the input, stylusAbcNode(s) is the output.
 
   // FIRST PASS: translates user nodes into rough stylus nodes
 
+  const bodyNode = document.body;
 
   // Render code blocks, before any other renderings. 
   // This prevents the html tags in the code blocks from being rendered.
@@ -89,25 +140,23 @@ $(() => {
   userCodeBlockNodes.forEach(cb => {
     const lang = cb.getAttribute("lang");
     const codeContent = cb.innerHTML;
-    const stylusCodeBlockNode = NodeFromString(
+    const stylusCodeBlockNode = DomElement.fromString(
       `<div class="code-box">
         <pre><code class=${lang}>${codeContentAdjusted(codeContent)}</code></pre>
       </div>`
       );
+    hljs.highlightBlock(stylusCodeBlockNode);
     cb.parentNode.replaceChild(stylusCodeBlockNode, cb);
   })
-  hljs.initHighlightingOnLoad();
-
-
 
   // Prepare a blank paper node.
-  const stylusPaperNode = StandardNodeWithIdAndClass("div", "paper", "paper");
+  const stylusPaperNode = DomElement.standardElementWithIdAndClass("div", "paper", "paper");
   bodyNode.appendChild(stylusPaperNode);
 
   // Render title
   const userPaperNode = document.getElementsByTagName("paper")[0];
   const paperTitle = userPaperNode.getAttribute("title");
-  const stylusTitleNode = StandardNodeWithIdAndClass("div", "title", "title");
+  const stylusTitleNode = DomElement.standardElementWithIdAndClass("div", "title", "title");
   stylusTitleNode.innerHTML = paperTitle;
   stylusPaperNode.appendChild(stylusTitleNode);
 
@@ -115,11 +164,11 @@ $(() => {
   const userAuthorDefinitionNodes = document.getElementsByTagName("authors");
   if (userAuthorDefinitionNodes.length == 1) {
     // Create the pane that holds the author list
-    const stylusAuthorListPaneNode = StandardNodeWithIdAndClass("div", "author-list-pane", "author-list-pane");
+    const stylusAuthorListPaneNode = DomElement.standardElementWithIdAndClass("div", "author-list-pane", "author-list-pane");
     stylusPaperNode.appendChild(stylusAuthorListPaneNode);
 
     // Create the author list that contains authors
-    const stylusAuthorListNode = StandardNodeWithIdAndClass("ul", "author-list", "author-list");
+    const stylusAuthorListNode = DomElement.standardElementWithIdAndClass("ul", "author-list", "author-list");
     stylusAuthorListPaneNode.appendChild(stylusAuthorListNode);
 
     // Visit each author the user created
@@ -128,7 +177,7 @@ $(() => {
       const authorName = n.getAttribute("name");
       const authorAffiliation = n.getAttribute("affiliation").replace("|", "<br />");
       const authorEmail = n.getAttribute("email");
-      stylusAuthorListNode.appendChild(NodeFromString(
+      stylusAuthorListNode.appendChild(DomElement.fromString(
         `<li class="author-list-item">
           <div class="author-box">
             <span class="author-name">${authorName}</span> <br />
@@ -145,7 +194,7 @@ $(() => {
   // Render abstract
   const userAbstractNode = document.getElementsByTagName("abstract")[0];
   const abstractContent = userAbstractNode.innerHTML;
-  const stylusAbstractNode = NodeFromString(
+  const stylusAbstractNode = DomElement.fromString(
       `<div id="abstract-pane" class="abstract-pane">
         <div class="abstract-heading">Abstract</div>
         <div id="abstract-body" class="abstract-body">
@@ -155,10 +204,8 @@ $(() => {
     );
   stylusPaperNode.appendChild(stylusAbstractNode);
 
-
-
   // Render sections
-  const stylusSectionPaneNode = StandardNodeWithIdAndClass("div", "section-pane", "section-pane");
+  const stylusSectionPaneNode = DomElement.standardElementWithIdAndClass("div", "section-pane", "section-pane");
   stylusPaperNode.appendChild(stylusSectionPaneNode);
 
   const userSectionNodes = Array.from(document.getElementsByTagName("section"));
@@ -206,7 +253,7 @@ $(() => {
       output[0] = input;
     }
 
-    const stylusSectionNode = NodeFromString(
+    const stylusSectionNode = DomElement.fromString(
         `<div class="section-box-general section-box-${sectionLevel}">
           <div class="section-heading-general section-heading-${sectionLevel}">
             <span class="section-heading-number">${sectionNumber}</span> ${s.getAttribute("heading")}
@@ -218,6 +265,7 @@ $(() => {
     stylusSectionPaneNode.appendChild(stylusSectionNode);
 
   })
+
 
   // Create citation bibliography
   /// Parse bibliography
@@ -248,16 +296,12 @@ $(() => {
     })
   })
 
-  // println(bibliography)
-
   if (DEBUG_FLAG == 0) {
     // Remove everything that the user originally wrote.
     userPaperNode.parentNode.removeChild(userPaperNode);
   }
 
   // SECOND PASS: refinement on the translated stylus nodes
-
-
   /// Turn citations into balloons.
   const balloonCSS = {
     border: 'solid 1px #999',
@@ -305,5 +349,6 @@ $(() => {
 
     //println(c)
   })
-})
 
+    
+})})
