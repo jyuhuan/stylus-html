@@ -180,7 +180,7 @@ ScriptLoader.loadScriptsSequentially(scripts, () => {$(() => {
     const userAuthorNodes = Array.from(userAuthorDefinitionNodes[0].children);
     userAuthorNodes.forEach(n => {
       const authorName = n.getAttribute("name");
-      const authorAffiliation = n.getAttribute("affiliation").replace("|", "<br />");
+      const authorAffiliation = n.getAttribute("affiliation").replace(/\|/g, "<br />");
       const authorEmail = n.getAttribute("email");
       stylusAuthorListNode.appendChild(DomElement.fromString(
         `<li class="author-list-item">
