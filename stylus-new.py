@@ -30,7 +30,7 @@ with open(stylus_js_path, 'w') as f:
 # Create a new template
 def create_file_at(p, title):
 	with open(p, 'w') as f:
-		s = """<paper title="%s"
+		s = """<paper title="%s">
 
   <authors>
     <author name="Firstname Lastname" affiliation="Affiliation Can Be|Multilined" email="name@domain.com"></author>
