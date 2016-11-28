@@ -15,10 +15,12 @@ Clone this repo to any directory. Let `stylus-dir` be that directory for demonst
 The following command will create a new document with a basic skeleton:
 
 ```
-python stylus-dir/stylus-new.py "My Paper Title"
+python stylus-dir/bin/stylus-new.py "My Paper Title"
 ```
 
 The new file will be created under `pwd`, and has the name `My-Paper-Title.html`. You can also omit the name. In that case, the the file name will be `Untitled-Stylus-Paper.html`.
+
+You may add `stylus-dir/bin` to your PATH for quick access.
 
 ### Why Stylus<sup style="font-variant: small-caps">HTML</sup>?
 > **Q**: With so many existing applications for writers, why are you still making Stylus<sup style="font-variant: small-caps">HTML</sup>? Sounds like you're reinventing the wheel. 
