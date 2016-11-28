@@ -21,7 +21,7 @@ python stylus-dir/stylus-new.py "My Paper Title"
 The new file will be created under `pwd`, and has the name `My-Paper-Title.html`. You can also omit the name. In that case, the the file name will be `Untitled-Stylus-Paper.html`.
 
 ### Why Stylus<sup style="font-variant: small-caps">HTML</sup>?
-> **Q**: With so many existing applications for writers, why are you making Stylus<sup style="font-variant: small-caps">HTML</sup>? Sounds like you're reinventing the wheel. 
+> **Q**: With so many existing applications for writers, why are you still making Stylus<sup style="font-variant: small-caps">HTML</sup>? Sounds like you're reinventing the wheel. 
 
 Yes, I am. But Stylus<sup style="font-variant: small-caps">HTML</sup> is a better wheel, in which
 
