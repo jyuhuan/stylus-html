@@ -100,7 +100,6 @@ $(() => {
 
 
 
-
   // Prepare a blank paper node.
   const stylusPaperNode = StandardNodeWithIdAndClass("div", "paper", "paper");
   bodyNode.appendChild(stylusPaperNode);
@@ -249,7 +248,7 @@ $(() => {
     })
   })
 
-  println(bibliography)
+  // println(bibliography)
 
   if (DEBUG_FLAG == 0) {
     // Remove everything that the user originally wrote.
@@ -306,7 +305,5 @@ $(() => {
 
     //println(c)
   })
-
-
 })
 
