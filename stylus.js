@@ -2,7 +2,7 @@ const stylusRootDir = ""
 const DEBUG_FLAG = 0
 
 if (stylusRootDir == "") {
-  alert("Please run update-installation.py! Otherwise the whole thing will be an epic failure! (as you will soon see after you click OK...)")
+  alert("Please run update-installation.py! \nOtherwise the whole thing will be an epic failure! \n(as you will soon see after you click OK...)")
 }
 
 /** 
