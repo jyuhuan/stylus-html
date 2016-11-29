@@ -122,6 +122,10 @@ span.bib-author-text {
   color: grey;
 }
 
+p {
+  margin: 0px 0px 10px 0px;
+}
+
 /* Custom tags */
 sc {
   font-variant: small-caps;
